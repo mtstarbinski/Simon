@@ -56,27 +56,21 @@ function nextSequence() {
   var randomChosenColor = buttonColors[randomNumber];
   gamePattern.push(randomChosenColor);
   var interval = 600;
-  var promise = Promise.resolve();
 
-  gamePattern.forEach((color) => {
-    promise = promise.then(function () {
-    $("#" + color)
+  gamePattern.forEach((color, index) => {
+    setTimeout(function () {
+      $("#" + color)
       .fadeOut(100)
       .fadeIn(100)
       .fadeOut(100)
       .fadeIn(100);
-
-    playSound(color);
-    return new Promise(function (resolve) {
-      setTimeout(resolve, interval);
-    });
+      playSound(color);
+    }, index * interval);  
   });
-});
 
-  promise.then(function () {
     level++;
     $("h1").text("Level " + level);
-  });
+
 }
 
 function animatePress(currentColor) {
